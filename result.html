@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PhotoBooth Result</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: url("images/Desktop\ -\ 2.png") no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    color: #ffffff;
+    margin-top: 20px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+  }
+
+  .layout-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+  }
+  .layout-container img.layout-bg {
+    width: 400px;
+    display: block;
+  }
+  .layout-photo {
+    position: absolute;
+    object-fit: cover;
+    border: none;
+  }
+
+  /* Layout positions (unchanged) */
+  .layout1-photo1 { top:18px; left:83px; width:250px; height:190px; }
+  .layout1-photo2 { top:224px; left:80px; width:250px; height:191px; }
+  .layout1-photo3 { top:432px; left:83px; width:250px; height:191px; }
+
+  .layout2-photo1 { top:22px;  left:100px; width:200px; height:140px; }
+  .layout2-photo2 { top:168px; left:100px; width:200px; height:140px; }
+  .layout2-photo3 { top:314px; left:100px; width:200px; height:140px; }
+  .layout2-photo4 { top:459px; left:100px; width:200px; height:140px; }
+
+  .layout3-photo1 { top:149px; left:92px; width:197px; height:127px; }
+  .layout3-photo2 { top:293px; left:92px; width:197px; height:127px; }
+  .layout3-photo3 { top:435px; left:92px; width:197px; height:128px; }
+
+  .layout4-photo1 { top:96px;  left:109px; width:185px; height:157px; }
+  .layout4-photo2 { top:262px; left:109px; width:184px; height:153px; }
+  .layout4-photo3 { top:424px; left:109px; width:185px; height:157px; }
+
+  /* ===== New Layouts ===== */
+  .layout5-photo1 { top:60px;  left:124px;  width:154px; height:120px; }
+  .layout5-photo2 { top:189px;  left:124px;  width:154px; height:120px; }
+  .layout5-photo3 { top:318px;  left:124px;  width:154px; height:120px; }
+
+  .layout6-photo1 { top:70px;  left:124px;  width:151px; height:133px; }
+  .layout6-photo2 { top:210px;  left:124px;  width:151px; height:125px; }
+  .layout6-photo3 { top:342px;  left:124px;  width:152px; height:130px; }
+
+  .layout7-photo1 { top:60px; left:124px; width:154px; height:119px; } 
+  .layout7-photo2 { top:188px; left:124px; width:154px; height:120px; } 
+  .layout7-photo3 { top:318px; left:124px; width:154px; height:120px; } 
+
+  .layout8-photo1 { top:70px; left:124px; width:151px; height:133px; } 
+  .layout8-photo2 { top:210px;  left:124px;  width:151px; height:125px; }
+  .layout8-photo3 { top:342px;  left:124px;  width:152px; height:130px; }
+
+
+
+
+
+  #downloadBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #fff;
+    color: #8d0024;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <h1>Your Photo Booth Result</h1>
+
+  <div class="layout-container" id="layoutContainer">
+    <img id="layoutBg" class="layout-bg" src="" alt="Layout Background">
+  </div>
+
+  <button id="downloadBtn">Download</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    const photos = JSON.parse(sessionStorage.getItem("photos") || "[]");
+    const layout = parseInt(sessionStorage.getItem("layout") || "1");
+    const layoutContainer = document.getElementById("layoutContainer");
+    const layoutBg = document.getElementById("layoutBg");
+
+    // Choose template background
+    const bgMap = {
+      1: "images/lay1.jpg",
+      2: "images/lay2.jpg",
+      3: "images/lay3.jpg",
+      4: "images/lay4.jpg",
+      5: "images/lay5.png",
+      6: "images/lay6.png",
+      7: "images/lay7.png",
+      8: "images/lay8.png"
+    };
+    layoutBg.src = bgMap[layout] || bgMap[1];
+
+    // Insert photos
+    photos.forEach((photo, i) => {
+      const img = document.createElement("img");
+      img.src = photo;
+      img.className = `layout-photo layout${layout}-photo${i + 1}`;
+      layoutContainer.appendChild(img);
+    });
+
+    // Download as PNG
+    document.getElementById("downloadBtn").addEventListener("click", () => {
+      html2canvas(layoutContainer).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "photo-booth-result.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    });
+  </script>
+</body>
+</html>

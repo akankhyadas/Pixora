@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cute Filter Camera</title>
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="camera.css">
+</head>
+<body>
+  <h1 id="layoutTitle"></h1>
+
+  <!-- Filter circle buttons -->
+  <div class="filter-bar" id="filterBar">
+    <div class="filter-thumb" data-filter="none"><img src="images/none.jpg" alt="None"></div>
+    <div class="filter-thumb" data-filter="grayscale(100%)"><img src="images/bnw.jpg" alt="Grayscale"></div>
+    <div class="filter-thumb" data-filter="sepia(80%)"><img src="images/sepia.jpg" alt="Sepia"></div>
+    <div class="filter-thumb" data-filter="contrast(150%)"><img src="images/contrast.jpg" alt="Contrast"></div>
+    <div class="filter-thumb" data-filter="brightness(120%)"><img src="images/bright .jpg" alt="Bright"></div>
+    <div class="filter-thumb" data-filter="saturate(180%)"><img src="images/vivid.jpg" alt="Vivid"></div>
+    <div class="filter-thumb" data-filter="blur(3px)"><img src="images/blur.jpg" alt="Blur"></div>
+  </div>
+
+  <video id="video" autoplay></video>
+  <br>
+  <button class="action-btn" onclick="capturePhoto()">Capture</button>
+  <button class="action-btn" onclick="finish()">Proceed</button>
+
+  <p id="status"></p>
+  <div id="previews"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedLayout = parseInt(urlParams.get("layout"));
+    const layoutPhotoCounts = { 1: 3, 2: 4, 3: 3, 4: 3 };
+
+    let requiredPhotos = layoutPhotoCounts[selectedLayout] || 3;
+    let takenPhotos = [];
+    let currentFilter = "none";
+
+    document.getElementById("layoutTitle").innerText =
+      `Layout ${selectedLayout} - Take ${requiredPhotos} Photos`;
+
+    // start camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => { document.getElementById("video").srcObject = stream; })
+      .catch(err => alert("Camera not accessible: " + err));
+
+    // click handler for circle filters
+    document.querySelectorAll(".filter-thumb").forEach(thumb => {
+      thumb.addEventListener("click", () => {
+        currentFilter = thumb.dataset.filter;
+        document.getElementById("video").style.filter = currentFilter;
+      });
+    });
+
+    function capturePhoto() {
+      if (takenPhotos.length >= requiredPhotos) {
+        alert(`You already took all ${requiredPhotos} photos for Layout ${selectedLayout}`);
+        return;
+      }
+
+      const video = document.getElementById("video");
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      const ctx = canvas.getContext("2d");
+      ctx.filter = currentFilter;
+      ctx.drawImage(video, 0, 0);
+
+      const dataUrl = canvas.toDataURL("image/png");
+      takenPhotos.push(dataUrl);
+
+      const container = document.createElement("div");
+      container.classList.add("photo-container");
+      const img = document.createElement("img");
+      img.src = dataUrl;
+      container.appendChild(img);
+
+      const removeBtn = document.createElement("button");
+      removeBtn.classList.add("remove-btn");
+      removeBtn.innerText = "X";
+      removeBtn.onclick = () => removePhoto(container, dataUrl);
+      container.appendChild(removeBtn);
+
+      document.getElementById("previews").appendChild(container);
+
+      updateStatus();
+    }
+
+    function removePhoto(container, dataUrl) {
+      takenPhotos = takenPhotos.filter(photo => photo !== dataUrl);
+      container.remove();
+      updateStatus();
+    }
+
+    function updateStatus() {
+      document.getElementById("status").innerText =
+        `You have taken ${takenPhotos.length} of ${requiredPhotos} photos`;
+    }
+
+    function finish() {
+      if (takenPhotos.length < requiredPhotos) {
+        alert(`Please take all ${requiredPhotos} photos before proceeding.`);
+        return;
+      }
+      sessionStorage.setItem("photos", JSON.stringify(takenPhotos));
+      sessionStorage.setItem("layout", selectedLayout);
+      window.location.href = "result.html";
+    }
+  </script>
+</body>
+</html>

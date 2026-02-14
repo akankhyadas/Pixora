@@ -1,0 +1,168 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Montserrat Medium */
+.montserrat-medium {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Navbar */
+.navbar {
+    position: absolute;      /* stays at top of viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* logo left, links right */
+    padding: 30px 180px;   /* spacing from edges */
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    z-index: 1000;
+}
+
+/* Logo */
+.navbar .logo {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: rgb(214, 28, 28);
+}
+
+/* Nav links list */
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 3rem;
+    margin: 0;
+    padding: 0;
+}
+
+/* Links */
+.navbar .nav-links li a {
+    text-decoration: none;
+    color: rgb(214, 28, 28);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    /* font-size: 1.1rem; */
+    transition: color 0.3s;
+}
+
+.navbar .nav-links li a:hover {
+    color: #ff4c68;
+}
+
+/* Home container */
+.home-container {
+    height: 110vh;                /* full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 80px;            /* space for navbar */
+}
+
+/* Home image */
+.home-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Start button */
+.start-btn {
+    position: relative;
+    top: -200px;              /* move up by 40px */
+    left: 350px;   
+    padding: 15px 50px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #760c1c;
+    border: none;
+    border-radius: 30px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.start-btn:hover {
+    background-color: #ff1c48;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Navbar ipad mini */
+    .navbar {
+        margin-top: 15px;
+        padding: 20px 90px; /* reduce side padding */
+        font-size: 1rem;
+    }
+
+    .navbar .nav-links {
+        gap: 2rem; /* smaller gap between links */
+    }
+
+    .navbar .logo {
+        font-size: 1.3rem;
+    }
+
+    /* Home container */
+    .home-container {
+        height: 390px;
+        padding-top: 100px;
+    }
+
+    /* Home image */
+    .home-image {
+        width: 100%;
+        padding-left:2px;
+        max-width: 810px; /* prevents overflow */
+        height: auto;
+    }
+
+    /* Start button */
+    .start-btn {
+        top: -120px;         /* adjust vertical position */
+        left: 230px;             /* reset alignment */
+        margin-left: auto;   /* center horizontally */
+        margin-right: auto;
+        display: block;
+        padding: 12px 40px;
+        font-size: 1rem;
+    }
+}
+@media screen and (min-width: 820px) and (max-width: 1180px) {
+    .navbar {
+        margin-top: 17px;
+        padding: 20px 90px; /* reduce side padding */
+        font-size: 1rem;
+    }
+    .home-image {
+        padding-top: 32px;
+        width: 100%;
+        padding-left:2px;
+        max-width: 810px; /* prevents overflow */
+        height: auto;
+    }
+}
+@media screen and (min-width: 1024px) and (max-width: 771px) {
+    .navbar {
+        margin-top: 17px;
+        padding: 20px 90px; /* reduce side padding */
+        font-size: 1rem;
+    }
+    .home-image {
+        /* padding-top: 32px; */
+        width: 300%;
+        padding-left:2px;
+        max-width: 900px; /* prevents overflow */
+        height: auto;
+    }
+}

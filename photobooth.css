@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Montserrat Medium */
+.montserrat-medium {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Navbar */
+.navbar {
+    position: absolute;            /* stays at top of viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* logo left, links right */
+    padding: 60px 180px;           /* spacing from edges */
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    z-index: 1000;
+}
+
+/* Logo */
+.navbar .logo {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: rgb(214, 28, 28);
+}
+
+/* Nav links list */
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 4rem;
+    margin: 0;
+    padding: 0;
+}
+
+/* Links */
+.navbar .nav-links li a {
+    text-decoration: none;
+    color: rgb(214, 28, 28);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar .nav-links li a:hover {
+    color: #ff4c68;
+}
+
+/* Home container */
+.home-container {
+    width: 100%;
+    /* remove the fixed 110vh height so it can grow with the image */
+    min-height: 100vh;
+    padding-top: 0;        /* remove extra top padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Home image */
+.home-image {
+    width: 100%;
+    height: auto;          /* let height expand naturally */
+    display: block;
+}
+
+/* Heading */
+.layout-heading {
+    margin-top: -1550px;   /* moves heading up closer to navbar */
+    text-align: center;
+    color: rgb(240, 234, 234);
+}
+
+.layout-heading h1 {
+    margin-bottom: 60px;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+/* Layout images grid */
+.layouts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;     /* moves images closer to heading */
+}
+
+.layout-img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.layout-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}

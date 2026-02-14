@@ -1,0 +1,13 @@
+#downloadBtn {
+    margin-left: 40px;      /* move it further to the right */
+    padding: 12px 24px;
+    background: #fff;
+    color: #8d0024;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    top: -150px;            /* move the button way up */
+  }
+  
